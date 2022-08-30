@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.card{
+  @apply mb-5 block rounded-lg border border-gray-100 shadow-md;
+}
+
+.primary-button{
+  @apply rounded bg-amber-300 py-2 px-4 hover:bg-amber-400 active:bg-amber-400;
+}
