@@ -1,7 +1,9 @@
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
+import { Store } from "../utils/Srore";
 
 function Layout({ children }) {
+  const { state } = useContext(Store);
   return (
     <div className="flex flex-col min-h-screen justify-between">
       <header>
@@ -12,7 +14,16 @@ function Layout({ children }) {
 
           <div>
             <Link href="/cart">
-              <a className="p-2">Cart</a>
+              <a className="p-2 mr-3">
+                Cart
+                {state.cart.cartItems.length > 0 && (
+                  <span className="bg-red-400 rounded fixed top-0.5  px-1 ">
+                    {state.cart.cartItems.reduce((a, e) => {
+                      return a + e.quantity;
+                    }, 0)}
+                  </span>
+                )}
+              </a>
             </Link>
             <Link href="/Login">
               <a className="p-2">Login</a>

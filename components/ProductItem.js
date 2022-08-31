@@ -5,7 +5,7 @@ function ProductItem({ product }) {
   const router = useRouter();
   return (
     <div
-      className="card"
+      className="card cursor-pointer"
       onClick={() => router.push(`/product/${product.slug}`)}
     >
       <img src={product.image} alt={product.name} className="rounded shadow" />

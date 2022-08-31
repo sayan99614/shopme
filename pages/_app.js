@@ -1,11 +1,14 @@
 import Layout from "../components/Layout";
 import "../styles/globals.css";
+import { StorePovider } from "../utils/Srore";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <StorePovider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </StorePovider>
   );
 }
 
