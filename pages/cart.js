@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
 import { Store } from "../utils/Srore";
-
-export default function CartPage() {
+import dynamic from "next/dynamic";
+function CartPage() {
   const { state, dispatch } = useContext(Store);
   const cartItems = state.cart.cartItems;
   const handleRemoveCart = (item) => {
@@ -91,3 +91,4 @@ export default function CartPage() {
     </>
   );
 }
+export default dynamic(() => Promise.resolve(CartPage), { ssr: false });
