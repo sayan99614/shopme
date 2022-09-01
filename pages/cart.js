@@ -9,6 +9,10 @@ export default function CartPage() {
   const handleRemoveCart = (item) => {
     dispatch({ type: "REMOVE_FROM_CART", payload: item });
   };
+  const handleQuantity = (item, qty) => {
+    const quantity = Number(qty);
+    dispatch({ type: "ADD_TO_CART", payload: { ...item, quantity } });
+  };
   return (
     <>
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
@@ -41,7 +45,19 @@ export default function CartPage() {
                         <div>{item.name}</div>
                       </div>
                     </td>
-                    <td className="p-5 text-right">{item.quantity}</td>
+                    <td className="p-5 text-right">
+                      <select
+                        name="quantity"
+                        value={item.quantity}
+                        onChange={(e) => handleQuantity(item, e.target.value)}
+                      >
+                        {[...Array(item.countInStock).keys()].map((q) => (
+                          <option key={q + 1} value={q + 1}>
+                            {q + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                     <td className="p-5 text-right">{item.price}</td>
                     <td className="p-5 text-center cursor-pointer">
                       <span onClick={() => handleRemoveCart(item)}>✖️</span>
