@@ -29,7 +29,7 @@ function Layout({ children }) {
                 )}
               </a>
             </Link>
-            <Link href="/Login">
+            <Link href="/login">
               <a className="p-2">Login</a>
             </Link>
           </div>

@@ -3,8 +3,10 @@ import Link from "next/link";
 import { useContext } from "react";
 import { Store } from "../utils/Srore";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 function CartPage() {
   const { state, dispatch } = useContext(Store);
+  const router = useRouter();
   const cartItems = state.cart.cartItems;
   const handleRemoveCart = (item) => {
     dispatch({ type: "REMOVE_FROM_CART", payload: item });
@@ -82,7 +84,12 @@ function CartPage() {
                 </div>
               </li>
               <li>
-                <button className="primary-button w-full">Checkout</button>
+                <button
+                  className="primary-button w-full"
+                  onClick={() => router.push("login?redirect=/shipping")}
+                >
+                  Checkout
+                </button>
               </li>
             </ul>
           </div>
