@@ -10,7 +10,7 @@ export default function Home() {
         <title>🛒Shopme - One stop shop for your essential needs</title>
       </Head>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {data.map((product) => (
+        {data.products.map((product) => (
           <ProductItem key={product.name} product={product} />
         ))}
       </div>

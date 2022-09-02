@@ -9,7 +9,7 @@ export default function ProductPage() {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
   const slug = router.query.slug;
-  const product = data.find((p) => p.slug === slug);
+  const product = data.products.find((p) => p.slug === slug);
 
   if (!product) {
     return <div>Product not found</div>;
