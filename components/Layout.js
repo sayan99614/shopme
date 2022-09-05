@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/Srore";
@@ -5,6 +6,7 @@ import { Store } from "../utils/Srore";
 function Layout({ children }) {
   const { state } = useContext(Store);
   const [cartItems, setCartItems] = useState([]);
+  const { data, status } = useSession();
   useEffect(() => {
     setCartItems(state.cart.cartItems);
   }, [state.cart.cartItems]);
@@ -29,9 +31,16 @@ function Layout({ children }) {
                 )}
               </a>
             </Link>
-            <Link href="/login">
-              <a className="p-2">Login</a>
-            </Link>
+            {status !== "loading" && status === "authenticated" && (
+              <Link href={`/user/${data.user._id}`}>
+                <a className="p-2">{data.user.name}</a>
+              </Link>
+            )}
+            {status !== "loading" && status === "unauthenticated" && (
+              <Link href="/login">
+                <a className="p-2">Login</a>
+              </Link>
+            )}
           </div>
         </nav>
       </header>

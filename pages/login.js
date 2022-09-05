@@ -1,16 +1,41 @@
 import { useForm } from "react-hook-form";
-
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 export default function LoginPage() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { redirect } = router.query;
+  useEffect(() => {
+    if (session?.user) {
+      router.push(redirect || "/");
+    }
+  }, [router, session, redirect]);
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  const submitHandler = ({ email, password }) => {};
+  const submitHandler = async ({ email, password }) => {
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <form className="mx-auto max-w-md" onSubmit={handleSubmit(submitHandler)}>
+    <form
+      method="POST"
+      className="mx-auto max-w-md"
+      onSubmit={handleSubmit(submitHandler)}
+    >
       <h1 className="text-xl mb-4">Login</h1>
       <div className="mb-4">
         <label htmlFor="email">Email</label>
