@@ -5,7 +5,7 @@ export const Store = createContext();
 const initialState = {
   cart: Cookies.get("cart")
     ? JSON.parse(Cookies.get("cart"))
-    : { cartItems: [] },
+    : { cartItems: [], shippingAddress: {} },
 };
 
 const reducer = (state, action) => {
@@ -30,6 +30,16 @@ const reducer = (state, action) => {
       });
       Cookies.set("cart", JSON.stringify({ cartItems: updatedCart }));
       return { ...state, cart: { cartItems: updatedCart } };
+    case "SET_SHIPPING_ADDRESS":
+      const address = action.payload;
+      return {
+        ...state,
+        cart: { ...state.cart },
+        shippingAddress: {
+          ...state.shippingAddress,
+          address,
+        },
+      };
     default:
       return state;
   }
