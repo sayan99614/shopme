@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CartWizard from "../components/CartWizard";
@@ -6,6 +7,7 @@ import { Store } from "../utils/Srore";
 
 function ShippingScreen() {
   const { state, dispatch } = useContext(Store);
+  const router = useRouter();
   const { cart } = state;
   const { shippingAddress } = cart;
   const {
@@ -105,7 +107,12 @@ function ShippingScreen() {
             <div className="text-red-400">{errors.postal.message}</div>
           )}
         </div>
-        <button className="primary-button w-full">Next</button>
+        <button
+          className="primary-button w-full"
+          onClick={() => router.push("/payment")}
+        >
+          Proceed to payment
+        </button>
       </form>
     </>
   );
