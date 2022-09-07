@@ -4,12 +4,12 @@ import Head from "next/head";
 import Image from "next/image";
 import { useContext } from "react";
 import { Store } from "../../utils/Srore";
+import db from "../../utils/db";
+import Product from "../../models/Product";
 
-export default function ProductPage() {
+export default function ProductPage({ product }) {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-  const slug = router.query.slug;
-  const product = data.products.find((p) => p.slug === slug);
 
   if (!product) {
     return <div>Product not found</div>;
@@ -79,4 +79,16 @@ export default function ProductPage() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { slug } = context.params;
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  product._id = toString(product._id);
+  return {
+    props: {
+      product: product ? product : null,
+    },
+  };
 }
