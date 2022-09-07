@@ -19,7 +19,6 @@ export default function ProductPage({ product }) {
       (item) => item.slug === product.slug
     );
     let quantity = existItem ? existItem.quantity + 1 : 1;
-    console.log(quantity);
 
     dispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
 
