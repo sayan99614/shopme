@@ -1,7 +1,5 @@
 import Head from "next/head";
 import ProductItem from "../components/ProductItem";
-import styles from "../styles/Home.module.css";
-import data from "../utils/data";
 import db from "../utils/db";
 import Product from "../models/Product";
 
@@ -28,7 +26,7 @@ export async function getServerSideProps() {
     props: {
       products: products.map((product) => ({
         ...product,
-        _id: toString(product._id),
+        _id: product._id.toString(),
       })),
     },
   };

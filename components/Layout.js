@@ -23,7 +23,7 @@ function Layout({ children }) {
               <a className="p-2 mr-3">
                 Cart
                 {cartItems.length > 0 && (
-                  <span className=" bg-amber-400 rounded fixed top-0.5  px-1 ">
+                  <span className=" bg-amber-400 rounded absolute top-0.5  px-1 ">
                     {cartItems.reduce((a, e) => {
                       return a + e.quantity;
                     }, 0)}
