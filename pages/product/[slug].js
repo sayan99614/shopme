@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import data from "../../utils/data";
 import Head from "next/head";
 import Image from "next/image";
 import { useContext } from "react";
@@ -19,6 +18,11 @@ export default function ProductPage({ product }) {
       (item) => item.slug === product.slug
     );
     let quantity = existItem ? existItem.quantity + 1 : 1;
+
+    if (quantity > product.countInStock) {
+      alert("maximum product stock reached !");
+      return;
+    }
 
     dispatch({ type: "ADD_TO_CART", payload: { ...product, quantity } });
 

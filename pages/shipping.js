@@ -19,16 +19,16 @@ function ShippingScreen() {
   } = useForm();
   Cookies.get(cart);
   useEffect(() => {
-    setValue("fullname", shippingAddress.fullname);
-    setValue("address", shippingAddress.address);
-    setValue("city", shippingAddress.city);
-    setValue("postal", shippingAddress.postal);
+    setValue("fullname", shippingAddress?.fullname);
+    setValue("address", shippingAddress?.address);
+    setValue("city", shippingAddress?.city);
+    setValue("postal", shippingAddress?.postal);
   }, [
     setValue,
-    shippingAddress.address,
-    shippingAddress.city,
-    shippingAddress.fullname,
-    shippingAddress.postal,
+    shippingAddress?.address,
+    shippingAddress?.city,
+    shippingAddress?.fullname,
+    shippingAddress?.postal,
   ]);
   const submitHandler = (data) => {
     dispatch({ type: "SET_SHIPPING_ADDRESS", payload: data });

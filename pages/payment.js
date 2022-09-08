@@ -47,7 +47,18 @@ function Payment() {
             </label>
           </div>
         ))}
-        <button className="primary-button">Submit</button>
+        <div className="flex justify-between">
+          <button
+            className="secondery-button"
+            type="button"
+            onClick={() => router.push("/shipping")}
+          >
+            Back
+          </button>
+          <button className="primary-button" type="submit">
+            Proceed to payment
+          </button>
+        </div>
       </form>
     </>
   );
