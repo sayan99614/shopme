@@ -29,20 +29,31 @@ const reducer = (state, action) => {
         return item.slug !== action.payload.slug;
       });
       Cookies.set("cart", JSON.stringify({ cartItems: updatedCart }));
-      return { ...state, cart: { cartItems: updatedCart } };
+      return { ...state, cart: { ...state.cart, cartItems: updatedCart } };
     case "SET_SHIPPING_ADDRESS":
       const address = action.payload;
       return {
         ...state,
-        shippingAddress: {
-          ...state.shippingAddress,
-          address,
+        cart: {
+          ...state.cart,
+          shippingAddress: address,
         },
       };
     case "SET_PAYMENT_METHOD":
       return {
         ...state,
-        paymentMethod: action.payload,
+        cart: {
+          ...state.cart,
+          paymentMethod: action.payload,
+        },
+      };
+    case "CLEAR_CART_ITEMS":
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          cartItems: [],
+        },
       };
     default:
       return state;
