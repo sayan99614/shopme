@@ -1,3 +1,4 @@
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { SessionProvider, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
@@ -8,15 +9,17 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <StorePovider>
-        <Layout>
-          {Component.auth ? (
-            <Auth>
+        <PayPalScriptProvider deferLoading={true}>
+          <Layout>
+            {Component.auth ? (
+              <Auth>
+                <Component {...pageProps} />
+              </Auth>
+            ) : (
               <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </Layout>
+            )}
+          </Layout>
+        </PayPalScriptProvider>
       </StorePovider>
     </SessionProvider>
   );

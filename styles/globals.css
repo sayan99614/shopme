@@ -16,3 +16,6 @@
 input,textarea,select{
   @apply rounded border p-2 outline-none ring-indigo-300 focus:ring;
 }
+
+.alert-danger{ @apply rounded my-2 p-3 outline-none bg-red-300  text-white}
+.alert-success{ @apply rounded my-2 p-3 outline-none bg-green-300 text-white }

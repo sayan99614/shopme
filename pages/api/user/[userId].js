@@ -1,9 +1,18 @@
 import db from "../../../utils/db";
 import User from "../../../models/User";
+import { getSession } from "next-auth/react";
 export default async function handler(req, res) {
   const userId = req.query.userId;
-  if (!userId) {
-    res.status(422).json({ message: "invalid userid" });
+  const session = await getSession({ req });
+  if (!session) {
+    return res
+      .status(401)
+      .send({ message: "Unauthorized you need to login first" });
+  }
+  if (userId !== session.user._id) {
+    return res
+      .status(401)
+      .json({ message: "unauthorized you can't access other user" });
   }
 
   try {

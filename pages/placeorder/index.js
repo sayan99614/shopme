@@ -2,14 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import CartWizard from "../components/CartWizard";
-import { Store } from "../utils/Srore";
+import { Store } from "../../utils/Srore";
+import CartWizard from "../../components/CartWizard";
 
 function Placeholder() {
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(Store);
   const { cartItems, shippingAddress, paymentMethod } = state.cart;
-  console.log(cartItems);
   const router = useRouter();
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
   const itemsPrice = round2(
@@ -47,7 +46,7 @@ function Placeholder() {
       setLoading(false);
       alert("order placed successfully");
       dispatch({ type: "CLEAR_CART_ITEMS" });
-      router.push(`orders/${data._id}`);
+      router.push(`placeorder/${data._id}`);
     } catch (error) {
       setLoading(false);
       alert("order could not placed please try again");
