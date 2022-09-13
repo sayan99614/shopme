@@ -7,10 +7,7 @@ export default async function handler(req, res) {
   if (!session) {
     res.status(401).send({ message: "Unauthorized please login " });
   }
-
   const { user } = session;
-
-  console.log(user);
   await db.connect();
   const newOrder = new Order({
     ...req.body,
