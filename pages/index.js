@@ -21,7 +21,7 @@ export default function Home({ products }) {
 export async function getServerSideProps() {
   await db.connect();
   const products = await Product.find().lean();
-  await db.connect();
+  await db.disconnect();
   return {
     props: {
       products: products.map((product) => ({

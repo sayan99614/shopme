@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
-import { getError } from "../../utils/error";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -55,7 +54,12 @@ export default function UserId() {
           )}
           <h1 className="text-2xl">Name: {user.name}</h1>
           <h1 className="text-2xl">Email: {user.email}</h1>
-          <button className="primary-button my-2 w-full">My Orders</button>
+          <button
+            className="primary-button my-2 w-full"
+            onClick={() => router.push(`/user/${userId}/orders`)}
+          >
+            My Orders
+          </button>
         </div>
       )}
     </>

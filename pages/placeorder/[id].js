@@ -1,7 +1,8 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -27,6 +28,7 @@ const reducer = (state, action) => {
 export default function PlaceOrderById() {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const router = useRouter();
+  const { data: session } = useSession();
   const orderId = router.query.id;
   const [
     { loading, order, error, loadingPay, errorPay, successPay },
@@ -39,6 +41,7 @@ export default function PlaceOrderById() {
     successPay: false,
     errorPay: "",
   });
+  const [cancelLoading, setCancelLoading] = useState(false);
   const {
     orderItems,
     shippingAddress,
@@ -133,10 +136,29 @@ export default function PlaceOrderById() {
   }
 
   function onError(error) {
-    console.log(error);
     alert("Something went wrong please try again later");
   }
-
+  const handleCancel = () => {
+    setCancelLoading(true);
+    const result = confirm("Are you want confirm cancel order");
+    async function cancelorder() {
+      try {
+        const res = await fetch(`/api/order/${orderId}`);
+        const data = await res.json();
+        alert(data.message);
+        setCancelLoading(false);
+        router.replace(`/user/${session.user._id}`);
+      } catch (error) {
+        alert("can't cancel at this moment plaease try again later");
+        setCancelLoading(false);
+      }
+    }
+    if (result) {
+      cancelorder();
+    } else {
+      setCancelLoading(false);
+    }
+  };
   return (
     <>
       <h1 className="mb-4 text-xl">Order {orderId}</h1>
@@ -233,6 +255,14 @@ export default function PlaceOrderById() {
                     <div>Total</div>
                     <div>${totalPrice}</div>
                   </div>
+                </li>
+                <li>
+                  <button
+                    className="w-full secondery-button my-1"
+                    onClick={handleCancel}
+                  >
+                    {cancelLoading ? "Loadig..." : "Cancel Order"}
+                  </button>
                 </li>
                 {!isPaid && (
                   <li>

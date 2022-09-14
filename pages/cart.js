@@ -20,7 +20,10 @@ function CartPage() {
       <h1 className="mb-4 text-xl">Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>
-          No Items found in shopping cart go and <Link href="/">Shop</Link>
+          No Items found in shopping cart go and{" "}
+          <Link href="/">
+            <a className="text-xl text-indigo-300">Shop</a>
+          </Link>
         </div>
       ) : (
         <div className="grid md:grid-cols-4 md:gap-5">

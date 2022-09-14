@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../../utils/Srore";
 import CartWizard from "../../components/CartWizard";
+import Cookies from "js-cookie";
 
 function Placeholder() {
   const [loading, setLoading] = useState(false);
@@ -44,10 +45,18 @@ function Placeholder() {
       });
       const data = await res.json();
       setLoading(false);
-      alert("order placed successfully");
       dispatch({ type: "CLEAR_CART_ITEMS" });
+      Cookies.set(
+        "cart",
+        JSON.stringify({
+          ...state.cart,
+          cartItems: [],
+        })
+      );
+      alert("order placed need to payment");
       router.push(`placeorder/${data._id}`);
     } catch (error) {
+      console.log(error);
       setLoading(false);
       alert("order could not placed please try again");
     }
